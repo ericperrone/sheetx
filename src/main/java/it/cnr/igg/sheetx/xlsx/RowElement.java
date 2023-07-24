@@ -1,4 +1,4 @@
-package it.cnr.igg.sheetx.xls;
+package it.cnr.igg.sheetx.xlsx;
 
 public class RowElement {
 	public String name, value;

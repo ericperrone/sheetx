@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import it.cnr.igg.sheetx.csv.Csv;
-import it.cnr.igg.sheetx.xls.*;
+import it.cnr.igg.sheetx.xlsx.*;
 
 /**
  * Hello world!
@@ -28,7 +28,7 @@ public class App
     	List<String> hn = Arrays.asList(headers);
     	ArrayList<String> hhn = new ArrayList<String>(hn);
     	try {
-    		Xls xls = new Xls("\\dev\\2022_09-0SVW6S_Stracke_data.xlsx");
+    		Xlsx xls = new Xlsx("\\dev\\2022_09-0SVW6S_Stracke_data.xlsx");
     		ArrayList<ArrayList<String>> content = xls.getContent("Data_MORB");
     		xls.locateHeader(hhn);
     		ArrayList<String> metadata = xls.buildSamplesMetadada();
@@ -39,7 +39,7 @@ public class App
     
     public void test01bis() {
     	try {
-    		Xls xls = new Xls("\\dev\\2022_09-0SVW6S_Stracke_data.xlsx");
+    		Xlsx xls = new Xlsx("\\dev\\2022_09-0SVW6S_Stracke_data.xlsx");
     		ArrayList<ArrayList<String>> content = xls.getContent("Data_MORB");
     		for (int i = 2; i < 10; i++) {
     			ArrayList<String> riga = content.get(i);
@@ -61,7 +61,7 @@ public class App
 
     public void test01() {
     	try {
-    		Xls xls = new Xls("\\dev\\2022-3-IZSZBL_Lustrino_data.xlsx");
+    		Xlsx xls = new Xlsx("\\dev\\2022-3-IZSZBL_Lustrino_data.xlsx");
     		ArrayList<ArrayList<String>> content = xls.getContent("Database");
     		for (int i = 0; i < 10; i++) {
     			ArrayList<String> riga = content.get(i);

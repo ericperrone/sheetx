@@ -1,4 +1,4 @@
-package it.cnr.igg.sheetx.xls;
+package it.cnr.igg.sheetx.xlsx;
 
 import java.io.*;
 import java.util.*;
@@ -12,7 +12,7 @@ class HeaderPosition {
 	public int row;
 }
 
-public class Xls {
+public class Xlsx {
 	private Workbook workBook = null;
 	private ArrayList<String> sheets = null;
 	private ArrayList<String> samples = null;
@@ -20,7 +20,7 @@ public class Xls {
 	private ArrayList<ArrayList<String>> content = null;
 	private ArrayList<String> samplesMetadata = null;
 
-	public Xls(String filePath) throws SheetxException {
+	public Xlsx(String filePath) throws SheetxException {
 		try {
 			readFile(filePath);
 		} catch (Exception ex) {

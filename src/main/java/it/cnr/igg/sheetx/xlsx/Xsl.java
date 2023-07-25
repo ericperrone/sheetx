@@ -7,10 +7,10 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 
-public class Xsl {
-	private Workbook workBook = null;
-	private ArrayList<String> sheets = null;
-	private ArrayList<ArrayList<String>> content = null;
+public class Xsl extends Sheetx {
+//	private Workbook workBook = null;
+//	private ArrayList<String> sheets = null;
+//	private ArrayList<ArrayList<String>> content = null;
 	
 	public Xsl(String filePath) throws SheetxException {
 		try {

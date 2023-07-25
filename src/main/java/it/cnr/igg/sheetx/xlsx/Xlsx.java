@@ -12,12 +12,12 @@ class HeaderPosition {
 	public int row;
 }
 
-public class Xlsx {
-	private Workbook workBook = null;
-	private ArrayList<String> sheets = null;
+public class Xlsx extends Sheetx {
+//	private Workbook workBook = null;
+//	private ArrayList<String> sheets = null;
 	private ArrayList<String> samples = null;
 	private ArrayList<HeaderPosition> hp = null;
-	private ArrayList<ArrayList<String>> content = null;
+//	private ArrayList<ArrayList<String>> content = null;
 	private ArrayList<String> samplesMetadata = null;
 
 	public Xlsx(String filePath) throws SheetxException {

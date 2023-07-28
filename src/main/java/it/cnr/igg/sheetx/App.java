@@ -80,24 +80,4 @@ public class App
     		x.printStackTrace();
     	}
     }
-    
-    public void test02() {
-    	try {
-    		Csv csv = new Csv("\\dev\\pippo.csv");
-    		csv.getHeaders();
-//			ArrayList<ArrayList<String>> content = csv.getContent();
-//			if (content.size() <= 0) {
-//				return;
-//			}
-//			for (int i = 0; i < 10; i++) {
-//				ArrayList<String> riga = content.get(i);
-//				for (String r : riga) {
-//					System.out.print(" " + r);
-//				}
-//				System.out.println();
-//			}
-    	} catch (Exception x) {
-    		x.printStackTrace();
-    	}
-    }
 }

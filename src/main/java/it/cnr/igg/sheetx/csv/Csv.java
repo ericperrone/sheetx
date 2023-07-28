@@ -37,8 +37,6 @@ public class Csv {
 		try {
 			fr = new FileReader(csvData);
 			parser = new CSVParser(fr, CSVFormat.DEFAULT);
-			// parser = new CSVParser(fr, CSVFormat.DEFAULT); // CSVParser.parse(csvData,
-			// CSVFormat.EXCEL);
 			List<CSVRecord> records = null;
 			try {
 				records = parser.getRecords();
@@ -64,7 +62,6 @@ public class Csv {
 
 			for (CSVRecord r : records) {
 				ArrayList<String> row = new ArrayList<String>();
-//				System.out.println(r.toString());
 				Iterator<String> i = r.iterator();
 				while (i.hasNext()) {
 					row.add("" + i.next());

@@ -153,22 +153,6 @@ public class Xlsx extends Sheetx {
 					}
 				}
 				cellSet.add(value);
-
-//			Iterator<Cell> cells = row.cellIterator();
-//			while (cells.hasNext()) {
-//				String value = "";
-//				Cell cell = cells.next();
-//				switch (cell.getCellType()) {
-//				case STRING:
-//					value = cell.getStringCellValue();
-//					break;
-//				case NUMERIC:
-//					value = "" + cell.getNumericCellValue();
-//					break;
-//				default:
-//					break;
-//				}
-//				cellSet.add(value);
 			}
 			content.add(cellSet);
 		}

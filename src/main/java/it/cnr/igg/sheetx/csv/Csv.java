@@ -34,9 +34,11 @@ public class Csv {
 		content = new ArrayList<ArrayList<String>>();
 		FileReader fr = null;
 		CSVParser parser = null;
+		char delimiter = ',';
 		try {
 			fr = new FileReader(csvData);
-			parser = new CSVParser(fr, CSVFormat.DEFAULT);
+			// parser = new CSVParser(fr, CSVFormat.DEFAULT);
+			parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(delimiter).build());
 			List<CSVRecord> records = null;
 			try {
 				records = parser.getRecords();
@@ -45,14 +47,16 @@ public class Csv {
 					parser.close();
 					fr.close();
 					fr = new FileReader(csvData);
-					parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(';').build());
+					delimiter = ';';
+					parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(delimiter).build());
 					records = parser.getRecords();
 				} catch (Exception e) {
 					try {
 						parser.close();
 						fr.close();
 						fr = new FileReader(csvData);
-						parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter('	').build());
+						delimiter = '	';
+						parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(delimiter).build());
 						records = parser.getRecords();
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -64,7 +68,11 @@ public class Csv {
 				ArrayList<String> row = new ArrayList<String>();
 				Iterator<String> i = r.iterator();
 				while (i.hasNext()) {
-					row.add("" + i.next());
+					String next = i.next();
+					next = next.replaceAll("\\\"", "");
+					String[] elements = next.split("" + delimiter);
+					for (String e: elements)
+						row.add(e);
 				}
 				content.add(row);
 			}

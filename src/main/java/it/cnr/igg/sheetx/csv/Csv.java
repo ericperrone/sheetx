@@ -38,7 +38,7 @@ public class Csv {
 		try {
 			fr = new FileReader(csvData);
 			// parser = new CSVParser(fr, CSVFormat.DEFAULT);
-			parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(delimiter).build());
+			parser = new CSVParser(fr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 			List<CSVRecord> records = null;
 			try {
 				records = parser.getRecords();
@@ -48,7 +48,7 @@ public class Csv {
 					fr.close();
 					fr = new FileReader(csvData);
 					delimiter = ';';
-					parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(delimiter).build());
+					parser = new CSVParser(fr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 					records = parser.getRecords();
 				} catch (Exception e) {
 					try {
@@ -56,7 +56,7 @@ public class Csv {
 						fr.close();
 						fr = new FileReader(csvData);
 						delimiter = '	';
-						parser = new CSVParser(fr, CSVFormat.Builder.create().setDelimiter(delimiter).build());
+						parser = new CSVParser(fr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 						records = parser.getRecords();
 					} catch (Exception ex) {
 						ex.printStackTrace();

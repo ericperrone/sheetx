@@ -4,6 +4,7 @@ import org.apache.commons.csv.*;
 import java.io.*;
 import java.util.*;
 import it.cnr.igg.sheetx.exceptions.SheetxException;
+import java.nio.charset.Charset;
 
 public class Csv {
 	private File csvData = null;
@@ -37,8 +38,10 @@ public class Csv {
 		char delimiter = ',';
 		try {
 			fr = new FileReader(csvData);
+			System.out.println(fr.getEncoding());
 			// parser = new CSVParser(fr, CSVFormat.DEFAULT);
-			parser = new CSVParser(fr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(csvData), "ISO-8859-1");
+			parser = new CSVParser(isr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 			List<CSVRecord> records = null;
 			try {
 				records = parser.getRecords();
@@ -48,15 +51,17 @@ public class Csv {
 					fr.close();
 					fr = new FileReader(csvData);
 					delimiter = ';';
-					parser = new CSVParser(fr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
+					parser = new CSVParser(fr,
+							CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 					records = parser.getRecords();
 				} catch (Exception e) {
 					try {
 						parser.close();
 						fr.close();
 						fr = new FileReader(csvData);
-						delimiter = '	';
-						parser = new CSVParser(fr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
+						delimiter = '\t';
+						parser = new CSVParser(fr,
+								CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 						records = parser.getRecords();
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -68,11 +73,14 @@ public class Csv {
 				ArrayList<String> row = new ArrayList<String>();
 				Iterator<String> i = r.iterator();
 				while (i.hasNext()) {
-					String next = i.next();
+					String next = i.next().toString();
+//					byte[] ptext = next.getBytes();
+//					next = new String(ptext, "ASCII");
 					next = next.replaceAll("\\\"", "");
-					String[] elements = next.split("" + delimiter);
-					for (String e: elements)
-						row.add(e);
+					row.add(next);
+//					String[] elements = next.split("" + delimiter);
+//					for (String e: elements)
+//						row.add(e);
 				}
 				content.add(row);
 			}
@@ -92,21 +100,17 @@ public class Csv {
 	public static void main(String[] args) {
 		Csv csv = new Csv("\\dev\\test2.csv");
 		try {
-//			Map<String, Integer> map = csv.getHeaders();
-//			if (map != null) {
-//				Set<String> keys = map.keySet();
-//				Iterator<String> it = keys.iterator();
-//				while(it.hasNext()) {
-//					System.out.println("header: " + it.next());
+			InputStreamReader isr = new InputStreamReader(new FileInputStream("\\dev\\georem-01.csv"), "ISO-8859-1");
+			char[] buffer = new char[1024];
+			isr.read(buffer);
+			isr.close();
+//			ArrayList<ArrayList<String>> content = csv.getContent();
+//			for (ArrayList<String> row : content) {
+//				for (String col : row) {
+//					System.out.print(col + " ");
 //				}
+//				System.out.println();
 //			}
-			ArrayList<ArrayList<String>> content = csv.getContent();
-			for (ArrayList<String> row : content) {
-				for (String col : row) {
-					System.out.print(col + " ");
-				}
-				System.out.println();
-			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

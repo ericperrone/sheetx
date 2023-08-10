@@ -4,43 +4,29 @@ import org.apache.commons.csv.*;
 import java.io.*;
 import java.util.*;
 import it.cnr.igg.sheetx.exceptions.SheetxException;
-import java.nio.charset.Charset;
 
 public class Csv {
 	private File csvData = null;
 	private ArrayList<ArrayList<String>> content = null;
+	private char recordSeparator = ',';
 
 	public Csv(String filePath) {
 		csvData = new File(filePath);
+		if (filePath.toLowerCase().endsWith(".tab"))
+			recordSeparator = '\t';
 	}
-
-//	public Map<String, Integer> getHeaders() throws Exception {
-//		FileReader fr = null;
-//		try {
-//			fr = new FileReader(csvData);
-//			CSVParser parser = new CSVParser(fr, CSVFormat.DEFAULT); // CSVParser.parse(csvData, CSVFormat.EXCEL);
-//			Map<String, Integer> headers = parser.getHeaderMap();
-//			return headers;
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//			throw ex;
-//		} finally {
-//			if (fr != null)
-//				fr.close();
-//		}
-//
-//	}
 
 	public ArrayList<ArrayList<String>> getContent() throws Exception {
 		content = new ArrayList<ArrayList<String>>();
-		FileReader fr = null;
+//		FileReader fr = null;
+		InputStreamReader isr = null;
 		CSVParser parser = null;
-		char delimiter = ',';
+		char delimiter = recordSeparator;
 		try {
-			fr = new FileReader(csvData);
-			System.out.println(fr.getEncoding());
+//			fr = new FileReader(csvData);
+//			System.out.println(fr.getEncoding());
 			// parser = new CSVParser(fr, CSVFormat.DEFAULT);
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(csvData), "ISO-8859-1");
+			isr = new InputStreamReader(new FileInputStream(csvData), "ISO-8859-1");
 			parser = new CSVParser(isr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 			List<CSVRecord> records = null;
 			try {
@@ -48,19 +34,19 @@ public class Csv {
 			} catch (Exception x) {
 				try {
 					parser.close();
-					fr.close();
-					fr = new FileReader(csvData);
-					delimiter = ';';
-					parser = new CSVParser(fr,
+					isr.close();
+					isr = new FileReader(csvData);
+					delimiter = ',';
+					parser = new CSVParser(isr,
 							CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 					records = parser.getRecords();
 				} catch (Exception e) {
 					try {
 						parser.close();
-						fr.close();
-						fr = new FileReader(csvData);
-						delimiter = '\t';
-						parser = new CSVParser(fr,
+						isr.close();
+						isr = new FileReader(csvData);
+						delimiter = ';';
+						parser = new CSVParser(isr,
 								CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 						records = parser.getRecords();
 					} catch (Exception ex) {
@@ -92,15 +78,15 @@ public class Csv {
 			if (parser != null) {
 				parser.close();
 			}
-			if (fr != null)
-				fr.close();
+			if (isr != null)
+				isr.close();
 		}
 	}
 
 	public static void main(String[] args) {
 		Csv csv = new Csv("\\dev\\test2.csv");
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream("\\dev\\georem-01.csv"), "ISO-8859-1");
+			InputStreamReader isr = new InputStreamReader(new FileInputStream("\\dev\\2022-06_AVAW2Y_Qin_data.tab"), "ISO-8859-1");
 			char[] buffer = new char[1024];
 			isr.read(buffer);
 			isr.close();

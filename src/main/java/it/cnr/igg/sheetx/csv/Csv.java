@@ -16,16 +16,18 @@ public class Csv {
 			recordSeparator = '\t';
 	}
 
+	public Csv(String filePath, char delimiter) {
+		csvData = new File(filePath);
+		recordSeparator = delimiter;
+	}
+
+	
 	public ArrayList<ArrayList<String>> getContent() throws Exception {
 		content = new ArrayList<ArrayList<String>>();
-//		FileReader fr = null;
 		InputStreamReader isr = null;
 		CSVParser parser = null;
 		char delimiter = recordSeparator;
 		try {
-//			fr = new FileReader(csvData);
-//			System.out.println(fr.getEncoding());
-			// parser = new CSVParser(fr, CSVFormat.DEFAULT);
 			isr = new InputStreamReader(new FileInputStream(csvData), "ISO-8859-1");
 			parser = new CSVParser(isr, CSVFormat.Builder.create().setQuote(null).setDelimiter(delimiter).build());
 			List<CSVRecord> records = null;
@@ -60,13 +62,8 @@ public class Csv {
 				Iterator<String> i = r.iterator();
 				while (i.hasNext()) {
 					String next = i.next().toString();
-//					byte[] ptext = next.getBytes();
-//					next = new String(ptext, "ASCII");
 					next = next.replaceAll("\\\"", "");
 					row.add(next);
-//					String[] elements = next.split("" + delimiter);
-//					for (String e: elements)
-//						row.add(e);
 				}
 				content.add(row);
 			}
